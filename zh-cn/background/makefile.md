@@ -12,11 +12,7 @@ Makefile文件描述了整个工程的编译、链接等相关规则。具体的
 
 ### Makefile文件命名
 
-默认情况下，make命令会在当前目录下按顺序找文件名为"GNUmakefile"、"makefile"、"Makefile"的文件，找到了则按照此文件的规则执行相关命令。在这三个文件名中，最好使用"Makefile"
-
-这个文件名，这个文件名首字母大写，比较醒目。同时，也可以使用别的文件名来书写Makefile规则，比如"Make.Linux"、"Make.Solaris"、"Make.AIX"等，此时在执行make命令时需要指定需要
-
-执行的Makefile，使用make的"-f"和"-file"参数即可，如`make -f Make.Linux`或`make -file Make.Linux`。
+默认情况下，make命令会在当前目录下按顺序找文件名为"GNUmakefile"、"makefile"、"Makefile"的文件，找到了则按照此文件的规则执行相关命令。在这三个文件名中，最好使用"Makefile"这个文件名，这个文件名首字母大写，比较醒目。同时，也可以使用别的文件名来书写Makefile规则，如"Make.Linux"、"Make.Solaris"、"Make.AIX"等，此时在执行make命令时需要指定需要执行的Makefile，使用make的"-f"和"-file"参数即可，如`make -f Make.Linux`或`make -file Make.Linux`。
 
 ### Makefile的内容
 
@@ -36,9 +32,7 @@ Makefile中主要包括了五个部分，分别为显式规则、隐晦规则、
 
 * 文件指示
 
-文件指示包括了三个部分。第一部分，可以在一个Makefile中引用另一个Makefile，就像C语言中的include一样；第二部分是可以根据某些情况指定Makefile中的有效部分，就像C语言中的#if
-
-一样；第三部分是可以定义一个多行的命令。
+文件指示包括了三个部分。第一部分，可以在一个Makefile中引用另一个Makefile，就像C语言中的include一样；第二部分是可以根据某些情况指定Makefile中的有效部分，就像C语言中的#if一样；第三部分是可以定义一个多行的命令。
 
 * 注释
 
