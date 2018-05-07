@@ -12,7 +12,7 @@ Makefile文件描述了整个工程的编译、链接等相关规则。具体的
 
 ### Makefile文件命名
 
-默认情况下，make命令会在当前目录下按顺序找文件名为"GNUmakefile"、"makefile"、"Makefile"的文件，找到了则按照此文件的规则执行相关命令。在这三个文件名中，最好使用"Makefile"这个文件名，这个文件名首字母大写，比较醒目。同时，也可以使用别的文件名来书写Makefile规则，如"Make.Linux"、"Make.Solaris"、"Make.AIX"等，此时在执行make命令时需要指定需要执行的Makefile，使用make的"-f"和"-file"参数即可，如`make -f Make.Linux`或`make -file Make.Linux`。
+默认情况下，make命令会在当前目录下按顺序找文件名为"GNUmakefile"、"makefile"、"Makefile"的文件，找到了则按照此文件的规则执行相关命令。在这三个文件名中，最好使用"Makefile"这个文件名，这个文件名首字母大写，比较醒目。同时，也可以使用别的文件名来书写Makefile规则，如"Make.Linux"、"Make.Solaris"、"Make.AIX"等，此时在执行make命令时需要指定需要执行的Makefile，使用make的"-f"和"-file"参数即可，如`make -f Make.Linux`或`make -file Make.Linux`。更过关于make的细节将在随后说明。
 
 ### Makefile的内容
 
@@ -85,6 +85,15 @@ TARGETS:PREREQUISITES;COMMAND
 
 一般来说，最简单的就是直接在命令行下输入 make 命令，make 命令会找当前目录的 makefile 来执行，一切都是自动的。但也有时你也许只想让 make 重编译某些文件，而不是 整个工程，而又有的时候你有几套编译规则，你想在不同的时候使用不同的编译规则，等等。
 
+### make执行过程
+
+1、make 会在当前目录下找名字叫“Makefile”或“makefile”的文件。 
+2、如果找到，它会找文件中的第一个目标文件(target)，在上面的例子中，他会找到“edit”这个文件，并把这个文件作为最终的目标文件。 
+3、如果edit文件不存在，或是edit所依赖的后面的 .o 文件的文件修改时间要比edit这个文件新，那么，他就会执行后面所定义的命令来生成 edit 这个文件。 
+4、如果edit所依赖的.o文件也存在，那么make会在当前文件中找目标为.o文件的依
+赖性，如果找到则再根据那一个规则生成.o 文件。(这有点像一个堆栈的过程) 
+5、当然，你的 C 文件和 H 文件是存在的啦，于是 make 会生成 .o 文件，然后再用 .o 文件生命 make 的终极任务，也就是执行文件 edit 了。
+
 ### make的退出码
 
 make 命令执行后有三个退出码:
@@ -92,13 +101,6 @@ make 命令执行后有三个退出码:
 1 - 如果 make 运行时出现任何错误，其返回 1。
 2 - 如果你使用了 make 的“-q”选项，并且 make 使得一些目标不需要更新，那么返回 2。
 
-### 指定make目标
-
-前面我们说过，GNU make 找寻默认的 Makefile 的规则是在当前目录下依次找三个文件 ——“GNUmakefile”、“makefile”和“Makefile”。其按顺序找这三个文件，一旦找到， 就开始读取这个文件并执行。
-当前，我们也可以给 make 命令指定一个特殊名字的 Makefile。要达到这个功能，我们 要使用 make 的“-f”或是“--file”参数(“--makefile”参数也行)。例如，我们有个 makefile 的名字是“hchen.mk”，那么，我们可以这样来让 make 来执行这个文件:
-make –f hchen.mk
-如果在 make 的命令行是，你不只一次地使用了“-f”参数，那么，所有指定的 makefile
-将会被连在一起传递给 make 执行。
 
 ### 检查规则
 
